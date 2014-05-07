@@ -1,0 +1,25 @@
+{
+  "name": "PHP.js",
+  "version": "0.0.1",
+  "description": "A small PHP implementation in JavaScript",
+  "main": "php.js",
+  "scripts": {
+    "test": "make test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jmather/phpjs.git"
+  },
+  "keywords": [
+    "interpreter",
+    "parser"
+  ],
+  "author": "MAcob Mather",
+  "bugs": {
+    "url": "https://github.com/jmather/phpjs/issues"
+  },
+  "dependencies": {
+    "jison": "0.4.x",
+    "mocha": "1.x"
+  }
+}
