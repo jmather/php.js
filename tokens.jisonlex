@@ -8,13 +8,13 @@
 
 "//".*                // ignore comment
 
-\n+                   return 'NEWLINE';
+\n+                   // skip newlines
 \s+                   // skip other whitespace
 
 // Literals: the hard-coded values in your programs.
 [0-9]+\b              return 'NUMBER';
 \"[^"]*\"             return 'STRING';
-\'[^']*\'             return 'STRING';
+\'[^']*\'             return 'LITERAL_STRING';
 "true"                return 'TRUE';
 "TRUE"                return 'TRUE';
 "false"               return 'FALSE';

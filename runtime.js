@@ -23,6 +23,7 @@ var util = require("util");
 function PHPValue(value) {
     this.value = value;
 };
+
 exports.PHPValue = PHPValue;
 
 function PHPStdClass() {
@@ -159,5 +160,6 @@ root.locals = {};
 
 root.locals['root'] = root;
 root.locals['print'] = new PHPFunction('print', ['content'], {'eval': function(scope) {
-    process.stdout.write(scope.get('content').value);
+    var val = scope.get('content').value.replace(/\\n/g, "\n");
+    process.stdout.write(val);
 }});

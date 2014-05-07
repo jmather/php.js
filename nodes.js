@@ -15,6 +15,10 @@ exports.StringNode = function StringNode(value) {
     this.value = value;
 };
 
+exports.LiteralStringNode = function LiteralStringNode(value) {
+    this.value = value;
+};
+
 exports.TrueNode = function TrueNode() {};
 exports.FalseNode = function FalseNode() {};
 exports.NullNode = function NullNode() {};
@@ -51,7 +55,22 @@ exports.AddNode = function AddNode(node1, node2) {
     this.node2 = node2;
 };
 
+exports.SubtractNode = function SubtractNode(node1, node2) {
+    this.node1 = node1;
+    this.node2 = node2;
+};
+
 exports.MultiplyNode = function MultiplyNode(node1, node2) {
+    this.node1 = node1;
+    this.node2 = node2;
+};
+
+exports.DivideNode = function DivideNode(node1, node2) {
+    this.node1 = node1;
+    this.node2 = node2;
+};
+
+exports.ConcatNode = function ConcatNode(node1, node2) {
     this.node1 = node1;
     this.node2 = node2;
 };

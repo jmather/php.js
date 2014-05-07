@@ -27,7 +27,7 @@
 // A JavaScript program is composed of statements.
 program:
   statements EOF              { return $1; }
-| OPEN_PHP program              { return $2; }
+| OPEN_PHP program        { return $3; }
 ;
 
 statements:
@@ -62,6 +62,7 @@ expression:
 literal:
   NUMBER                       { $$ = new nodes.NumberNode(parseInt($1)); }
 | STRING                       { $$ = new nodes.StringNode($1.substring(1, $1.length-1)); }
+| LITERAL_STRING               { $$ = new nodes.LiteralStringNode($1.substring(1, $1.length-1)); }
 | TRUE                         { $$ = new nodes.TrueNode(); }
 | FALSE                        { $$ = new nodes.FalseNode(); }
 | NULL                         { $$ = new nodes.NullNode(); }
@@ -89,6 +90,9 @@ arguments:
 operator:
   expression '+' expression    { $$ = new nodes.AddNode($1, $3) }
 | expression '*' expression    { $$ = new nodes.MultiplyNode($1, $3) }
+| expression '-' expression    { $$ = new nodes.SubtractNode($1, $3) }
+| expression '/' expression    { $$ = new nodes.DivideNode($1, $3) }
+| expression '.' expression    { $$ = new nodes.ConcatNode($1, $3) }
 ;
 
 function:
