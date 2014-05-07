@@ -1,12 +1,12 @@
-# Run a .js file both on tiny.js and node.js and diff the output.
+# Run a .php file both on php.js and php and diff the output.
 
 # Run on tiny.js
-node tiny.js $1 > __tiny_output.txt
+node php.js $1 > __phpjs_output.txt
 
 # Run on node and replace some property names.
-node $1 > __node_output.txt
+php $1 > __php_output.txt
 
 echo "$1:"
-diff __tiny_output.txt __node_output.txt && echo "ok"
+diff __phpjs_output.txt __php_output.txt && echo "ok"
 
-rm __tiny_output.txt __node_output.txt
+rm __phpjs_output.txt __php_output.txt

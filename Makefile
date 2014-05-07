@@ -19,7 +19,7 @@ test: parser.js
 	make test-samples
 
 test-samples:
-	@for f in samples/*.js; do sh scripts/compare_outputs.sh $$f; done	
+	@for f in samples/*.php; do sh scripts/compare_outputs.sh $$f; done
 
 test-lexer: parser.js
 	${MOCHA} test/lexer_test.js

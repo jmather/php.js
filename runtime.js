@@ -123,7 +123,6 @@ PHPFunction.prototype.__call = function(object, scope, args) {
     functionScope.locals[this.parameters[i]] = args[i];
   }
 
-    console.log(this.body);
   return this.body.eval(functionScope);
 };
 
@@ -146,7 +145,7 @@ exports.null = { value: null };
 // 
 // Thus, we create it as a scope that also acts as an object (has properties).
 
-var root = exports.root = new PHPStdClass();
+var root = exports.root = new PHPScope();
 root.this = root; // this == root when inside the root scope.
 
 // Properties of the root/global scope are also the local variables. That's why when you
@@ -159,6 +158,6 @@ root.locals = {};
 // `root`, the `console.log` and `alert` functions.
 
 root.locals['root'] = root;
-root.locals['print'] = new PHPFunction(['content'], {'__call': function(scope) {
-    console.log(scope.get('content').value);
+root.locals['print'] = new PHPFunction('print', ['content'], {'eval': function(scope) {
+    process.stdout.write(scope.get('content').value);
 }});

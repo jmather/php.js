@@ -27,6 +27,7 @@
 // A JavaScript program is composed of statements.
 program:
   statements EOF              { return $1; }
+| OPEN_PHP program              { return $2; }
 ;
 
 statements:
