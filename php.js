@@ -4,9 +4,9 @@
 //
 // usage: node php.js samples/hello-world.php
 
-var parser = require('./parser').parser;
-var interpreter = require('./interpreter');
-var runtime = require('./runtime');
+var parser = require('./src/parser').parser;
+var interpreter = require('./src/interpreter');
+var runtime = require('./src/runtime');
 var fs = require('fs');
 
 // We first read the file passed as an argument to the process.

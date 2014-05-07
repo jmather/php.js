@@ -3,16 +3,10 @@
 JISON = node node_modules/jison/lib/cli.js
 MOCHA = node node_modules/mocha/bin/mocha
 
-all: parser.js demos/simple_parser.js
+all: parser.js
 
-browserify: all
-	browserify browser.js -o bundle.js
-
-parser.js: grammar.jison tokens.jisonlex
-	${JISON} $^ -o $@
-
-demos/simple_parser.js: demos/simple_grammar.jison tokens.jisonlex
-	${JISON} $^ -o $@	
+parser.js: etc/grammar.jison etc/tokens.jisonlex
+	${JISON} $^ -o src/$@
 
 test: parser.js
 	${MOCHA}
@@ -33,4 +27,4 @@ test-runtime: parser.js
 test-interpreter: parser.js
 	${MOCHA} test/interpreter_test.js
 
-.PHONY: browserify test test-samples test-lexer test-parser test-runtime test-interpreter
+.PHONY: test test-samples test-lexer test-parser test-runtime test-interpreter

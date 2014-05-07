@@ -1,7 +1,7 @@
 var assert = require("assert");
-var runtime = require('../runtime');
-var parser = require('../parser').parser;
-require('../interpreter');
+var runtime = require('../src/runtime');
+var parser = require('../src/parser').parser;
+require('../src/interpreter');
 
 describe('Runtime', function() {
   it('creates global when setting undeclared local', function() {

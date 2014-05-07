@@ -1,7 +1,7 @@
 var assert = require("assert");
-var runtime = require('../runtime');
-var parser = require('../parser').parser;
-require('../interpreter');
+var runtime = require('../src/runtime');
+var parser = require('../src/parser').parser;
+require('../src/interpreter');
 
 describe('Interpreter', function () {
     it('returns', function () {

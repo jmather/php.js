@@ -1,5 +1,5 @@
 var assert = require("assert");
-var lexer = require('../lexer');
+var lexer = require('../src/lexer');
 
 describe('Lexer', function () {
     it('lex new lines', function () {

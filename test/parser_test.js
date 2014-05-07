@@ -1,6 +1,6 @@
 var assert = require("assert");
-var parser = require('../parser').parser;
-var nodes = require('../nodes');
+var parser = require('../src/parser').parser;
+var nodes = require('../src/nodes');
 
 describe('Parser', function() {
   it('parses numbers', function() {
