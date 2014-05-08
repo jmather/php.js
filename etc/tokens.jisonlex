@@ -13,32 +13,33 @@
 
 // Literals: the hard-coded values in your programs.
 [0-9]+\b              return 'NUMBER';
+[0-9]*\.[0-9]+\b      return 'FLOAT';
+[0-9]+\.[0-9]*\b      return 'FLOAT';
 \"[^"]*\"             return 'STRING';
 \'[^']*\'             return 'LITERAL_STRING';
 "true"                return 'TRUE';
 "false"               return 'FALSE';
 "null"                return 'NULL';
-"<?php"               return "OPEN_PHP";
-"?>"                  return "CLOSE_PHP";
 
 // Keywords
+"<?php"               return "OPEN_PHP";
+"?>"                  return "CLOSE_PHP";
 "public"              return 'PUBLIC_ACCESS';
 "private"             return 'PRIVATE_ACCESS';
 "protected"           return 'PROTECTED_ACCESS';
 "function"            return 'FUNCTION';
 "return"              return 'RETURN';
-"$"                   return 'VAR'
-"->"                  return 'INSTANCE_ACCESS'
-"::"                  return 'STATIC_ACCESS'
-"=>"                  return 'RELATION'
 "new"                 return 'NEW';
 
 // Identifiers are names: variable and function names.
 [a-zA-Z_]\w*          return 'IDENTIFIER';
 
 // Operators
-"=="                 return '==';
-"!="                 return '!=';
+"=>"                  return 'RELATION'
+"->"                  return 'INSTANCE_ACCESS'
+"::"                  return 'STATIC_ACCESS'
+"=="                  return '==';
+"!="                  return '!=';
 "==="                 return '===';
 "!=="                 return '!==';
 "&&"                  return '&&';

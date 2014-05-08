@@ -73,8 +73,8 @@ literal:
 // intended to be as simple as possible and easy to understand.
 
 variable:
-  VAR IDENTIFIER                { $$ = new nodes.GetVariableNode($2); }
-| VAR IDENTIFIER "=" expression     { $$ = new nodes.SetVariableNode($2, $4); }
+  "$" IDENTIFIER                { $$ = new nodes.GetVariableNode($2); }
+| "$" IDENTIFIER "=" expression     { $$ = new nodes.SetVariableNode($2, $4); }
 ;
 
 call:
@@ -109,8 +109,8 @@ functionAccessIndicator:
 ;
 
 parameters:
-  VAR IDENTIFIER                   { $$ = [ $2 ]; }
-| parameters "," VAR IDENTIFIER    { $1.push($4); $$ = $1 }
+  "$" IDENTIFIER                   { $$ = [ $2 ]; }
+| parameters "," "$" IDENTIFIER    { $1.push($4); $$ = $1 }
 |                                  { $$ = []; }
 ;
 

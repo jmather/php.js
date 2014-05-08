@@ -74,8 +74,8 @@
 var parser = (function(){
 var parser = {trace: function trace() { },
 yy: {},
-symbols_: {"error":2,"program":3,"statements":4,"EOF":5,"OPEN_PHP":6,"statement":7,"terminator":8,";":9,"expression":10,"return":11,"literal":12,"variable":13,"call":14,"operator":15,"function":16,"(":17,")":18,"NUMBER":19,"STRING":20,"LITERAL_STRING":21,"TRUE":22,"FALSE":23,"NULL":24,"VAR":25,"IDENTIFIER":26,"=":27,"arguments":28,",":29,"+":30,"*":31,"-":32,"/":33,".":34,"FUNCTION":35,"parameters":36,"{":37,"}":38,"functionAccessIndicator":39,"PUBLIC_ACCESS":40,"PROTECTED_ACCESS":41,"PRIVATE_ACCESS":42,"RETURN":43,"$accept":0,"$end":1},
-terminals_: {2:"error",5:"EOF",6:"OPEN_PHP",9:";",17:"(",18:")",19:"NUMBER",20:"STRING",21:"LITERAL_STRING",22:"TRUE",23:"FALSE",24:"NULL",25:"VAR",26:"IDENTIFIER",27:"=",29:",",30:"+",31:"*",32:"-",33:"/",34:".",35:"FUNCTION",37:"{",38:"}",40:"PUBLIC_ACCESS",41:"PROTECTED_ACCESS",42:"PRIVATE_ACCESS",43:"RETURN"},
+symbols_: {"error":2,"program":3,"statements":4,"EOF":5,"OPEN_PHP":6,"statement":7,"terminator":8,";":9,"expression":10,"return":11,"literal":12,"variable":13,"call":14,"operator":15,"function":16,"(":17,")":18,"NUMBER":19,"STRING":20,"LITERAL_STRING":21,"TRUE":22,"FALSE":23,"NULL":24,"$":25,"IDENTIFIER":26,"=":27,"arguments":28,",":29,"+":30,"*":31,"-":32,"/":33,".":34,"FUNCTION":35,"parameters":36,"{":37,"}":38,"functionAccessIndicator":39,"PUBLIC_ACCESS":40,"PROTECTED_ACCESS":41,"PRIVATE_ACCESS":42,"RETURN":43,"$accept":0,"$end":1},
+terminals_: {2:"error",5:"EOF",6:"OPEN_PHP",9:";",17:"(",18:")",19:"NUMBER",20:"STRING",21:"LITERAL_STRING",22:"TRUE",23:"FALSE",24:"NULL",25:"$",26:"IDENTIFIER",27:"=",29:",",30:"+",31:"*",32:"-",33:"/",34:".",35:"FUNCTION",37:"{",38:"}",40:"PUBLIC_ACCESS",41:"PROTECTED_ACCESS",42:"PRIVATE_ACCESS",43:"RETURN"},
 productions_: [0,[3,2],[3,2],[4,1],[4,3],[4,2],[4,0],[8,1],[7,1],[7,1],[10,1],[10,1],[10,1],[10,1],[10,1],[10,3],[12,1],[12,1],[12,1],[12,1],[12,1],[12,1],[13,2],[13,4],[14,4],[28,1],[28,3],[28,0],[15,3],[15,3],[15,3],[15,3],[15,3],[16,8],[16,9],[39,1],[39,1],[39,1],[36,2],[36,4],[36,0],[11,1],[11,2]],
 performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* action[1] */, $$ /* vstack */, _$ /* lstack */) {
 /* this == yyval */
@@ -630,62 +630,64 @@ case 2:// skip other whitespace
 break;
 case 3:return 19;
 break;
-case 4:return 20;
+case 4:return 'FLOAT';
 break;
-case 5:return 21;
+case 5:return 'FLOAT';
 break;
-case 6:return 22;
+case 6:return 20;
 break;
-case 7:return 23;
+case 7:return 21;
 break;
-case 8:return 24;
+case 8:return 22;
 break;
-case 9:return "OPEN_PHP";
+case 9:return 23;
 break;
-case 10:return "CLOSE_PHP";
+case 10:return 24;
 break;
-case 11:return 40;
+case 11:return "OPEN_PHP";
 break;
-case 12:return 42;
+case 12:return "CLOSE_PHP";
 break;
-case 13:return 41;
+case 13:return 40;
 break;
-case 14:return 35;
+case 14:return 42;
 break;
-case 15:return 43;
+case 15:return 41;
 break;
-case 16:return 25
+case 16:return 35;
 break;
-case 17:return 'INSTANCE_ACCESS'
+case 17:return 43;
 break;
-case 18:return 'STATIC_ACCESS'
+case 18:return 'NEW';
 break;
-case 19:return 'RELATION'
+case 19:return 26;
 break;
-case 20:return 'NEW';
+case 20:return 'RELATION'
 break;
-case 21:return 26;
+case 21:return 'INSTANCE_ACCESS'
 break;
-case 22:return '==';
+case 22:return 'STATIC_ACCESS'
 break;
-case 23:return '!=';
+case 23:return '==';
 break;
-case 24:return '===';
+case 24:return '!=';
 break;
-case 25:return '!==';
+case 25:return '===';
 break;
-case 26:return '&&';
+case 26:return '!==';
 break;
-case 27:return '||';
+case 27:return '&&';
 break;
-case 28:return yy_.yytext;
+case 28:return '||';
 break;
-case 29:return 5;
+case 29:return yy_.yytext;
+break;
+case 30:return 5;
 break;
 }
 },
-rules: [/^(?:\/\/.*)/,/^(?:\n+)/,/^(?:\s+)/,/^(?:[0-9]+\b)/,/^(?:"[^"]*")/,/^(?:'[^']*')/,/^(?:true\b)/,/^(?:false\b)/,/^(?:null\b)/,/^(?:<\?php\b)/,/^(?:\?>)/,/^(?:public\b)/,/^(?:private\b)/,/^(?:protected\b)/,/^(?:function\b)/,/^(?:return\b)/,/^(?:\$)/,/^(?:->)/,/^(?:::)/,/^(?:=>)/,/^(?:new\b)/,/^(?:[a-zA-Z_]\w*)/,/^(?:==)/,/^(?:!=)/,/^(?:===)/,/^(?:!==)/,/^(?:&&)/,/^(?:\|\|)/,/^(?:.)/,/^(?:$)/],
-conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29],"inclusive":true}}
+rules: [/^(?:\/\/.*)/,/^(?:\n+)/,/^(?:\s+)/,/^(?:[0-9]+\b)/,/^(?:[0-9]*\.[0-9]+\b)/,/^(?:[0-9]+\.[0-9]*\b)/,/^(?:"[^"]*")/,/^(?:'[^']*')/,/^(?:true\b)/,/^(?:false\b)/,/^(?:null\b)/,/^(?:<\?php\b)/,/^(?:\?>)/,/^(?:public\b)/,/^(?:private\b)/,/^(?:protected\b)/,/^(?:function\b)/,/^(?:return\b)/,/^(?:new\b)/,/^(?:[a-zA-Z_]\w*)/,/^(?:=>)/,/^(?:->)/,/^(?:::)/,/^(?:==)/,/^(?:!=)/,/^(?:===)/,/^(?:!==)/,/^(?:&&)/,/^(?:\|\|)/,/^(?:.)/,/^(?:$)/],
+conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30],"inclusive":true}}
 };
 return lexer;
 })();
