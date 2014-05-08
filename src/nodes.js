@@ -40,7 +40,8 @@ exports.CallNode = function CallNode(objectNode, name, argumentNodes) {
     this.argumentNodes = argumentNodes;
 };
 
-exports.FunctionNode = function FunctionNode(name, parameters, bodyNode) {
+exports.FunctionNode = function FunctionNode(access, name, parameters, bodyNode) {
+    this.access = access;
     this.name = name;
     this.parameters = parameters;
     this.bodyNode = bodyNode;

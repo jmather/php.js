@@ -97,7 +97,15 @@ operator:
 
 function:
   FUNCTION IDENTIFIER "(" parameters ")" "{" statements "}"
-                               { $$ = new nodes.FunctionNode($2, $4, $7) }
+                               { $$ = new nodes.FunctionNode("public", $2, $4, $7) }
+| functionAccessIndicator FUNCTION IDENTIFIER "(" parameters ")" "{" statements "}"
+                               { $$ = new nodes.FunctionNode($1, $3, $5, $8) }
+;
+
+functionAccessIndicator:
+  PUBLIC_ACCESS                { $$ = $1 }
+| PROTECTED_ACCESS             { $$ = $1 }
+| PRIVATE_ACCESS               { $$ = $1 }
 ;
 
 parameters:

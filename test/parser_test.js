@@ -49,7 +49,7 @@ describe('Parser', function() {
   it('parses function', function() {
     assert.deepEqual(
       new nodes.BlockNode([
-        new nodes.FunctionNode("thing", ["a", "b"], new nodes.BlockNode([ new nodes.ReturnNode(new nodes.StringNode('hello')) ]))
+        new nodes.FunctionNode("public", "thing", ["a", "b"], new nodes.BlockNode([ new nodes.ReturnNode(new nodes.StringNode('hello')) ]))
       ]),
       parser.parse("function thing($a, $b) { return 'hello'; }"));
   });

@@ -16,18 +16,15 @@
 \"[^"]*\"             return 'STRING';
 \'[^']*\'             return 'LITERAL_STRING';
 "true"                return 'TRUE';
-"TRUE"                return 'TRUE';
 "false"               return 'FALSE';
-"FALSE"               return 'FALSE';
 "null"                return 'NULL';
-"NULL"                return 'NULL';
 "<?php"               return "OPEN_PHP";
 "?>"                  return "CLOSE_PHP";
 
 // Keywords
-"public"              return 'FUNCTION';
-"private"             return 'FUNCTION';
-"protected"           return 'FUNCTION';
+"public"              return 'PUBLIC_ACCESS';
+"private"             return 'PRIVATE_ACCESS';
+"protected"           return 'PROTECTED_ACCESS';
 "function"            return 'FUNCTION';
 "return"              return 'RETURN';
 "$"                   return 'VAR'
