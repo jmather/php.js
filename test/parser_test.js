@@ -31,7 +31,7 @@ describe('Parser', function() {
   it('parses call', function() {
     assert.deepEqual(
       new nodes.BlockNode([
-        new nodes.CallNode(null, "thing", [new nodes.NumberNode(1), new nodes.NumberNode(2)])
+        new nodes.CallNode("thing", [new nodes.NumberNode(1), new nodes.NumberNode(2)])
       ]),
       parser.parse("thing(1, 2)"));
   });

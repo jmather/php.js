@@ -22,8 +22,6 @@ exports.LiteralStringNode = function LiteralStringNode(value) {
 exports.TrueNode = function TrueNode() {};
 exports.FalseNode = function FalseNode() {};
 exports.NullNode = function NullNode() {};
-exports.UndefinedNode = function UndefinedNode() {};
-exports.ObjectNode = function ObjectNode() {};
 
 exports.GetVariableNode = function GetVariableNode(name) {
     this.name = name;
