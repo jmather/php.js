@@ -113,7 +113,7 @@ case 22: this.$ = new nodes.GetVariableNode($$[$0]);
 break;
 case 23: this.$ = new nodes.SetVariableNode($$[$0-2], $$[$0]); 
 break;
-case 24: this.$ = new nodes.CallNode(null, $$[$0-3], $$[$0-1]); 
+case 24: this.$ = new nodes.CallNode($$[$0-3], $$[$0-1]); 
 break;
 case 25: this.$ = [ $$[$0] ]; 
 break;

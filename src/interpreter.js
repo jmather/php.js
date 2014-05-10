@@ -38,7 +38,7 @@ function Return(value) {
 
 nodes.ReturnNode.prototype.eval = function (scope) {
     throw new Return(this.valueNode ? this.valueNode.eval(scope) : runtime.undefined);
-}
+};
 
 // Literals are pretty easy to eval. Simply return the runtime value.
 
@@ -94,13 +94,8 @@ nodes.FunctionNode.prototype.eval = function (scope) {
 // 2. On a variable: `name(...)`. `this` will be set to the `root` object.
 
 nodes.CallNode.prototype.eval = function (scope) {
-    if (this.objectNode) { // object.name(...)
-        var object = this.objectNode.eval(scope);
-        var theFunction = object.get(this.name);
-    } else { // name()
-        var object = runtime.root;
-        var theFunction = scope.get(this.name);
-    }
+    var object = runtime.root;
+    var theFunction = scope.get(this.name);
 
     var args = this.argumentNodes.map(function (arg) {
         return arg.eval(scope);

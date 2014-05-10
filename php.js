@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // # Putting it all together
 //
 // All the pieces of our language are put together here.

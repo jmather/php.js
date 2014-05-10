@@ -18,6 +18,8 @@
 %left  '*' '/'
 %right '!'
 %right NEW
+%left  '->'
+%left  '::'
 %right '.'
 
 %start program  // Tell which rule to start with.
@@ -78,7 +80,7 @@ variable:
 ;
 
 call:
-  IDENTIFIER "(" arguments ")"                { $$ = new nodes.CallNode(null, $1, $3); }
+  IDENTIFIER "(" arguments ")"                { $$ = new nodes.CallNode($1, $3); }
 ;
 
 arguments:

@@ -34,8 +34,7 @@ exports.SetVariableNode = function SetVariableNode(name, valueNode) {
     this.valueNode = valueNode;
 };
 
-exports.CallNode = function CallNode(objectNode, name, argumentNodes) {
-    this.objectNode = objectNode;
+exports.CallNode = function CallNode(name, argumentNodes) {
     this.name = name;
     this.argumentNodes = argumentNodes;
 };
