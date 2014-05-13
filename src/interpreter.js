@@ -69,21 +69,20 @@ nodes.SetVariableNode.prototype.eval = function (scope) {
     return scope.set(this.name, this.valueNode.eval(scope));
 };
 
-// Creating a function is just a matter of instantiating `JsFunction`.
+// Creating a function is just a matter of instantiating `PHPFunction`.
 
 nodes.FunctionNode.prototype.eval = function (scope) {
     var func = new runtime.PHPFunction(this.name, this.parameters, this.bodyNode);
 
     if (this.name !== null) {
-        runtime.functions.set(this.name, func);
+        runtime.functionScope.set(this.name, func);
     }
 
     return func;
 };
 
 nodes.CallNode.prototype.eval = function (scope) {
-    var object = runtime.root;
-    var theFunction = runtime.functions.get(this.name);
+    var theFunction = runtime.functionScope.get(this.name);
 
     var args = this.argumentNodes.map(function (arg) {
         return arg.eval(scope);

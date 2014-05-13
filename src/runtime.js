@@ -21,7 +21,7 @@ exports.PHPValue = function PHPValue(value) {
 exports.PHPScope = function PHPScope(parent) {
     this.locals = {};     // local variables
     this.parent = parent; // parent scope
-    this.root = !parent;  // is it the root/global scope?
+    this.isRoot = !parent;  // is it the root/global scope?
 };
 
 exports.PHPScope.prototype.hasLocal = function(name) {
@@ -29,7 +29,7 @@ exports.PHPScope.prototype.hasLocal = function(name) {
 };
 
 exports.PHPScope.prototype.has = function(name) {
-    if (this.root)
+    if (this.isRoot)
         return this.hasLocal(name);
 
     return this.parent.has(name);
@@ -45,7 +45,7 @@ exports.PHPScope.prototype.get = function(name) {
     if (this.hasLocal(name)) // Look in current scope
         return this.locals[name];
 
-    if (this.root)
+    if (this.isRoot)
         return null; // maybe in the future we will warn people...
 
     return this.parent.get(name);
@@ -59,7 +59,7 @@ exports.PHPScope.prototype.get = function(name) {
 exports.PHPScope.prototype.set = function(name, value) {
     // This covers top of the tree assignment, local ownership assignment,
     // and enforces new ownership by the closest scope.
-    if (this.root || this.hasLocal(name) || !this.has(name))
+    if (this.isRoot || this.hasLocal(name) || !this.has(name))
         return this.locals[name] = value;
 
     return this.parent.set(name, value);
@@ -86,9 +86,10 @@ exports.PHPFunction = function PHPFunction(name, parameters, body) {
 // To execute the function, we `__call` its body.
 
 exports.PHPFunction.prototype.__call = function(scope, args) {
-  var functionScope = new exports.PHPScope(null); // PHP gives each function it's own scope.
+  // PHP gives each function it's own scope.
+  var functionScope = new exports.PHPScope();
 
-  // We assign arguments to local variables. That's how you get access to them.
+  // We assign arguments to local variables.
   for (var i = 0; i < this.parameters.length; i++) {
     functionScope.set(this.parameters[i], args[i]);
   }
@@ -115,13 +116,13 @@ exports.null = new exports.PHPValue(null);
 // 
 // Thus, we create it as a scope that also acts as an object (has properties).
 
-exports.root = new exports.PHPScope();
-exports.functions = new exports.PHPScope();
+exports.rootScope = new exports.PHPScope();
+exports.functionScope = new exports.PHPScope();
 
 // Here we'd normaly define all the fancy things, like global functions and objects, that you
 // have access to inside your PHP programs. We will start with a meager `print`.
 
-exports.functions.set('print', new exports.PHPFunction('print', ['content'], {'eval': function(scope) {
+exports.functionScope.set('print', new exports.PHPFunction('print', ['content'], {'eval': function(scope) {
     var val = scope.get('content').value.replace(/\\n/g, "\n");
     process.stdout.write(val);
 }}));
