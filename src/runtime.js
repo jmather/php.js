@@ -46,7 +46,7 @@ exports.PHPScope.prototype.get = function(name) {
         return this.locals[name];
 
     if (this.root)
-        throw this.name + " is not defined";
+        return null; // maybe in the future we will warn people...
 
     return this.parent.get(name);
 };
