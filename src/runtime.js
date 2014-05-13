@@ -18,15 +18,21 @@ exports.PHPValue = function PHPValue(value) {
 // Scopes also have a parent scope. The chain of parents will go down to the root scope,
 // where you define your global variables.
 
-exports.PHPScope = function PHPScope(_this, parent) {
+exports.PHPScope = function PHPScope(parent) {
     this.locals = {};     // local variables
-    this.this = _this;    // value of `this`
     this.parent = parent; // parent scope
     this.root = !parent;  // is it the root/global scope?
 };
 
 exports.PHPScope.prototype.hasLocal = function(name) {
   return this.locals.hasOwnProperty(name);
+};
+
+exports.PHPScope.prototype.has = function(name) {
+    if (this.root)
+        return this.hasLocal(name);
+
+    return this.parent.has(name);
 };
 
 // Getting the value in a variable is done by looking first in the current scope,
@@ -36,9 +42,13 @@ exports.PHPScope.prototype.hasLocal = function(name) {
 // functions and global variables.
 
 exports.PHPScope.prototype.get = function(name) {
-  if (this.hasLocal(name)) return this.locals[name]; // Look in current scope
-  if (this.parent) return this.parent.get(name); // Look in parent scope
-  throw this.name + " is not defined";
+    if (this.hasLocal(name)) // Look in current scope
+        return this.locals[name];
+
+    if (this.root)
+        throw this.name + " is not defined";
+
+    return this.parent.get(name);
 };
 
 // Setting the value of a variables follows the same logic as when getting it's value.
@@ -47,10 +57,13 @@ exports.PHPScope.prototype.get = function(name) {
 // the effect of declaring it as a global variable.
 
 exports.PHPScope.prototype.set = function(name, value) {
-  if (this.root || this.hasLocal(name)) return this.locals[name] = value;
-  return this.parent.set(name, value);
-};
+    // This covers top of the tree assignment, local ownership assignment,
+    // and enforces new ownership by the closest scope.
+    if (this.root || this.hasLocal(name) || !this.has(name))
+        return this.locals[name] = value;
 
+    return this.parent.set(name, value);
+};
 
 // ## Functions
 //
