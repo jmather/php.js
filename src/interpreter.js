@@ -26,6 +26,8 @@ nodes.BlockNode.prototype.eval = function (scope) {
             throw e;
         }
     }
+
+    return runtime.null;
 };
 
 function Return(value) {
@@ -33,7 +35,10 @@ function Return(value) {
 }
 
 nodes.ReturnNode.prototype.eval = function (scope) {
-    throw new Return(this.valueNode ? this.valueNode.eval(scope) : runtime.null);
+    if (this.valueNode)
+        throw new Return(this.valueNode.eval(scope));
+
+    throw new Return(runtime.null);
 };
 
 // Literals are pretty easy to eval. Simply return the runtime value.
@@ -74,9 +79,7 @@ nodes.SetVariableNode.prototype.eval = function (scope) {
 nodes.FunctionNode.prototype.eval = function (scope) {
     var func = new runtime.PHPFunction(this.name, this.parameters, this.bodyNode);
 
-    if (this.name !== null) {
-        runtime.functionScope.set(this.name, func);
-    }
+    runtime.functionScope.set(this.name, func);
 
     return func;
 };
