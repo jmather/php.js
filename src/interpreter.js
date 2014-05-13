@@ -75,7 +75,7 @@ nodes.FunctionNode.prototype.eval = function (scope) {
     var func = new runtime.PHPFunction(this.name, this.parameters, this.bodyNode);
 
     if (this.name !== null) {
-        runtime.root.locals[this.name] = func;
+        runtime.functions.set(this.name, func);
     }
 
     return func;
@@ -83,7 +83,7 @@ nodes.FunctionNode.prototype.eval = function (scope) {
 
 nodes.CallNode.prototype.eval = function (scope) {
     var object = runtime.root;
-    var theFunction = scope.get(this.name);
+    var theFunction = runtime.functions.get(this.name);
 
     var args = this.argumentNodes.map(function (arg) {
         return arg.eval(scope);
