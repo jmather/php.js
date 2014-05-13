@@ -14,10 +14,6 @@ exports.PHPValue = PHPValue;
 
 // ## Scopes
 //
-// The most confusing part of JavaScript is the way it handles the scope of variables.
-// When is it defined as a global variable? What's the value of `this`?
-// All of this can be implemented in a very simple and straightforward fashion.
-//
 // A scope encapsulates the context of execution, the local variables and the value of `this`,
 // inside a function or at the root of your program.
 //
@@ -52,10 +48,6 @@ PHPScope.prototype.get = function(name) {
 // We search where the variable is defined, and change its value. If the variable
 // was not defined in any parent scope, we'll end up in the root scope, which will have
 // the effect of declaring it as a global variable.
-//
-// This is why, in JavaScript, if you assign a value to a variable without declaring it first
-// (using `var`), it will search in parent scopes until it reaches the root scope and
-// declare it there, thus declaring it as a global variable.
 
 PHPScope.prototype.set = function(name, value) {
   if (this.root || this.hasLocal(name)) return this.locals[name] = value;
@@ -80,12 +72,12 @@ exports.PHPFunction = PHPFunction;
 //
 // The function's body is a tree of nodes.
 // - nodes.js defines those nodes.
-// - eval.js defines how each node is evaluated.
+// - interpreter.js defines how each node is evaluated.
 //
 // To execute the function, we `__call` its body.
 
-PHPFunction.prototype.__call = function(object, scope, args) {
-  var functionScope = new PHPScope(object, null); // this = object, parent scope = scope
+PHPFunction.prototype.__call = function(scope, args) {
+  var functionScope = new PHPScope(null); // PHP gives each function it's own scope.
 
   // We assign arguments to local variables. That's how you get access to them.
   for (var i = 0; i < this.parameters.length; i++) {
@@ -100,9 +92,9 @@ PHPFunction.prototype.__call = function(object, scope, args) {
 // We map the primitives to their JavaScript counterparts (in their `value` property).
 // Note that `true` and `false` are objects, but `null` and `undefined` are not..
 
-exports.true = { value: true };
-exports.false = { value: false };
-exports.null = { value: null };
+exports.true = new PHPValue(true);
+exports.false = new PHPValue(false);
+exports.null = new PHPValue(null);
 
 
 // ## The root object
@@ -123,10 +115,8 @@ root.this = root; // this == root when inside the root scope.
 root.locals = {};
 
 // Here we'd normaly define all the fancy things, like global funtions and objects, that you
-// have access to inside your JavaScript programs. But we're keeping it simple and only define
-// `root`, the `console.log` and `alert` functions.
+// have access to inside your PHP programs. We will start with 'print'.
 
-root.locals['root'] = root;
 root.locals['print'] = new PHPFunction('print', ['content'], {'eval': function(scope) {
     var val = scope.get('content').value.replace(/\\n/g, "\n");
     process.stdout.write(val);

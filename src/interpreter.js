@@ -15,13 +15,9 @@ var runtime = require('./runtime');
 
 nodes.BlockNode.prototype.eval = function (scope) {
     try {
-        // Hoist declarations
-        this.nodes.forEach(function (node) {
-            if (node.declare) node.declare(scope)
-        });
         // Eval after
         this.nodes.forEach(function (node) {
-            node.eval(scope)
+            node.eval(scope);
         });
     } catch (e) {
         if (e instanceof Return) {
@@ -37,7 +33,7 @@ function Return(value) {
 }
 
 nodes.ReturnNode.prototype.eval = function (scope) {
-    throw new Return(this.valueNode ? this.valueNode.eval(scope) : runtime.undefined);
+    throw new Return(this.valueNode ? this.valueNode.eval(scope) : runtime.null);
 };
 
 // Literals are pretty easy to eval. Simply return the runtime value.
@@ -85,11 +81,6 @@ nodes.FunctionNode.prototype.eval = function (scope) {
     return func;
 };
 
-// Calling a function can take two forms:
-//
-// 1. On an object: `object->name(...)`. `this` will be set to `object`.
-// 2. On a variable: `name(...)`. `this` will be set to the `root` object.
-
 nodes.CallNode.prototype.eval = function (scope) {
     var object = runtime.root;
     var theFunction = scope.get(this.name);
@@ -98,7 +89,7 @@ nodes.CallNode.prototype.eval = function (scope) {
         return arg.eval(scope);
     });
 
-    return theFunction.__call(object, scope, args);
+    return theFunction.__call(scope, args);
 };
 
 
