@@ -5,44 +5,12 @@
 // with the runtime.
 //
 // We need to build representations for everything we'll have access to inside the language.
-// The first one being: objects!
-
-var util = require("util");
-
-// ## Object
-// Objects have properties. One missing piece here is the prototype. To keep things simple,
-// we will not have any form of inheritance. All our objects will be able to do is get and set
-// the values stored in its properties.
-//
-// It will also be able to wrap a real JavaScipt value, like a string or a number. We'll use this
-// to represent strings and numbers inside our runtime. Every object living inside our program,
-// will be an instance of `JsObject`.
-// 
-// If we want to create a number in our runtime, we do: `new JsObject(4)`.
 
 function PHPValue(value) {
     this.value = value;
 };
 
 exports.PHPValue = PHPValue;
-
-function PHPStdClass() {
-  this.properties = {};
-}
-exports.PHPStdClass = PHPStdClass;
-
-PHPStdClass.prototype.hasProperty = function(name) {
-  return this.properties.hasOwnProperty(name);
-};
-
-PHPStdClass.prototype.__get = function(name) {
-  if (this.hasProperty(name)) return this.properties[name];
-};
-
-PHPStdClass.prototype.__set = function(name, value) {
-  return this.properties[name] = value;
-};
-
 
 // ## Scopes
 //

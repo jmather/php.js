@@ -17,10 +17,10 @@
 %left  '+' '-'
 %left  '*' '/'
 %right '!'
-%right NEW
 %left  '->'
 %left  '::'
-%right '.'
+%left  '.'
+%right NEW
 
 %start program  // Tell which rule to start with.
 
@@ -28,16 +28,14 @@
 
 // A JavaScript program is composed of statements.
 program:
-  statements EOF              { return $1; }
+  statements EOF          { return $1; }
 | OPEN_PHP program        { return $3; }
 ;
 
 statements:
   statement                        { $$ = new nodes.BlockNode([ $1 ]); }
-| statements terminator statement  { $1.push($3); // statements ($1) is a BlockNode
-                                     $$ = $1; }
+| statements terminator statement  { $1.push($3); $$ = $1; }
 | statements terminator            { $$ = $1; }
-|                                  { $$ = new nodes.BlockNode([]); }
 ;
 
 terminator:
@@ -64,7 +62,6 @@ expression:
 literal:
   NUMBER                       { $$ = new nodes.NumberNode(parseInt($1)); }
 | STRING                       { $$ = new nodes.StringNode($1.substring(1, $1.length-1)); }
-| LITERAL_STRING               { $$ = new nodes.LiteralStringNode($1.substring(1, $1.length-1)); }
 | TRUE                         { $$ = new nodes.TrueNode(); }
 | FALSE                        { $$ = new nodes.FalseNode(); }
 | NULL                         { $$ = new nodes.NullNode(); }

@@ -57,9 +57,6 @@ nodes.NullNode.prototype.eval = function (scope) {
 nodes.StringNode.prototype.eval = function (scope) {
     return new runtime.PHPValue(this.value);
 };
-nodes.LiteralStringNode.prototype.eval = function (scope) {
-    return new runtime.PHPValue(this.value);
-};
 nodes.NumberNode.prototype.eval = function (scope) {
     return new runtime.PHPValue(this.value);
 };

@@ -15,10 +15,6 @@ exports.StringNode = function StringNode(value) {
     this.value = value;
 };
 
-exports.LiteralStringNode = function LiteralStringNode(value) {
-    this.value = value;
-};
-
 exports.TrueNode = function TrueNode() {};
 exports.FalseNode = function FalseNode() {};
 exports.NullNode = function NullNode() {};

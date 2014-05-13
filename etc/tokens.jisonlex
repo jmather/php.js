@@ -13,10 +13,10 @@
 
 // Literals: the hard-coded values in your programs.
 [0-9]+\b              return 'NUMBER';
-[0-9]*\.[0-9]+\b      return 'FLOAT';
-[0-9]+\.[0-9]*\b      return 'FLOAT';
+[0-9]*\.[0-9]+\b      return 'NUMBER';
+[0-9]+\.[0-9]*\b      return 'NUMBER';
 \"[^"]*\"             return 'STRING';
-\'[^']*\'             return 'LITERAL_STRING';
+\'[^']*\'             return 'STRING';
 "true"                return 'TRUE';
 "false"               return 'FALSE';
 "null"                return 'NULL';
@@ -35,15 +35,15 @@
 [a-zA-Z_]\w*          return 'IDENTIFIER';
 
 // Operators
-"=>"                  return 'RELATION'
-"->"                  return 'INSTANCE_ACCESS'
-"::"                  return 'STATIC_ACCESS'
 "=="                  return '==';
 "!="                  return '!=';
 "==="                 return '===';
 "!=="                 return '!==';
 "&&"                  return '&&';
 "||"                  return '||';
+"=>"                  return '=>'
+"->"                  return '->'
+"::"                  return '::'
 
 // We end with a catch all rule. Any one single character that has not been matched
 // will be handled here. A few examples: `.`, `+`, `(` and `)`.
