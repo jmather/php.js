@@ -20,4 +20,4 @@ var node = parser.parse(code);
 
 // Finally, start the evaluation of our program on the top of the tree,
 // passing the root (global) object as the scope in which to start its execution.
-node.eval(runtime.root);
+node.eval(runtime.rootScope);
