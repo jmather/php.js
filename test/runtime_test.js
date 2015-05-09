@@ -5,17 +5,8 @@ require('../src/interpreter');
 
 describe('Runtime', function () {
     it('creates local when setting undeclared local', function () {
-        var global = new runtime.PHPScope();
-        var scope = new runtime.PHPScope(runtime.root, global);
+        var scope = new runtime.PHPScope();
         scope.set('x', runtime.true);
-
-        assert.equal(runtime.true, scope.get('x'));
-    });
-
-    it('fetches from global when asking for local', function () {
-        var global = new runtime.PHPScope();
-        var scope = new runtime.PHPScope(runtime.rootScope, global);
-        global.set('x', runtime.true);
 
         assert.equal(runtime.true, scope.get('x'));
     });
