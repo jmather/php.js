@@ -14,41 +14,21 @@ exports.PHPValue = function PHPValue(value) {
 //
 // A scope encapsulates the context of execution, the local variables and the value of `this`,
 // inside a function or at the root of your program.
-//
-// Scopes also have a parent scope. The chain of parents will go down to the root scope,
-// where you define your global variables.
 
-exports.PHPScope = function PHPScope(parent) {
+exports.PHPScope = function PHPScope() {
     this.locals = {};     // local variables
-    this.parent = parent; // parent scope
-    this.isRoot = !parent;  // is it the root/global scope?
-};
-
-exports.PHPScope.prototype.hasLocal = function(name) {
-  return this.locals.hasOwnProperty(name);
 };
 
 exports.PHPScope.prototype.has = function(name) {
-    if (this.isRoot)
-        return this.hasLocal(name);
-
-    return this.parent.has(name);
+    return (this.locals[name] !== undefined);
 };
 
-// Getting the value in a variable is done by looking first in the current scope,
-// then recursively going in the parent until we reach the root scope.
-// This is how you get access to variables defined in parent functions,
-// also why defining a variable in a function will override the variables of parent
-// functions and global variables.
-
+// Getting the value in a variable is done by looking in the scope,
 exports.PHPScope.prototype.get = function(name) {
-    if (this.hasLocal(name)) // Look in current scope
+    if (this.has(name)) // Look in current scope
         return this.locals[name];
 
-    if (this.isRoot)
-        return null; // maybe in the future we will warn people...
-
-    return this.parent.get(name);
+    return null; // maybe in the future we will warn people...
 };
 
 // Setting the value of a variables follows the same logic as when getting it's value.
@@ -57,12 +37,7 @@ exports.PHPScope.prototype.get = function(name) {
 // the effect of declaring it as a global variable.
 
 exports.PHPScope.prototype.set = function(name, value) {
-    // This covers top of the tree assignment, local ownership assignment,
-    // and enforces new ownership by the closest scope.
-    if (this.isRoot || this.hasLocal(name) || !this.has(name))
-        return this.locals[name] = value;
-
-    return this.parent.set(name, value);
+    return this.locals[name] = value;
 };
 
 // ## Functions

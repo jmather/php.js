@@ -24,9 +24,6 @@
 // Keywords
 "<?php"               return "OPEN_PHP";
 "?>"                  return "CLOSE_PHP";
-"public"              return 'PUBLIC_ACCESS';
-"private"             return 'PRIVATE_ACCESS';
-"protected"           return 'PROTECTED_ACCESS';
 "function"            return 'FUNCTION';
 "return"              return 'RETURN';
 "new"                 return 'NEW';
@@ -37,13 +34,8 @@
 // Operators
 "=="                  return '==';
 "!="                  return '!=';
-"==="                 return '===';
-"!=="                 return '!==';
 "&&"                  return '&&';
 "||"                  return '||';
-"=>"                  return '=>'
-"->"                  return '->'
-"::"                  return '::'
 
 // We end with a catch all rule. Any one single character that has not been matched
 // will be handled here. A few examples: `.`, `+`, `(` and `)`.

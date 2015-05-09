@@ -7,44 +7,37 @@
   var nodes = require('./nodes');
 %}
 
-// Based on [MDN Operator Precedence table](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Operator_Precedence).
+// Based on [PHP Specification](https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y).
 %left  ','
 %right '='
 %left  '||'
 %left  '&&'
-%left  '==' '!=' '===' '!=='
-%left  '>' '>=' '<' '<='
-%left  '+' '-'
+%nonassoc  '==' '!=' '===' '!=='
+%nonassoc  '>' '>=' '<' '<='
+%left  '+' '-' '.'
 %left  '*' '/'
 %right '!'
-%left  '->'
-%left  '::'
-%left  '.'
-%right NEW
 
 %start program  // Tell which rule to start with.
 
 %%
 
-// A JavaScript program is composed of statements.
+// A PHP program is composed of a document starting with <?php and then containing a block of statements.
 program:
-  statements EOF          { return $1; }
-| OPEN_PHP program        { return $3; }
+  OPEN_PHP statements EOF   { return $2; }
+| OPEN_PHP statements CLOSE_PHP { return $2; }
 ;
 
 statements:
-  statement                        { $$ = new nodes.BlockNode([ $1 ]); }
-| statements terminator statement  { $1.push($3); $$ = $1; }
-| statements terminator            { $$ = $1; }
-;
-
-terminator:
-  ";"
+  statement              { $$ = new nodes.BlockNode([ $1 ]); }
+| statements statement   { $1.push($2); $$ = $1; }
 ;
 
 statement:
-  expression
-| return
+  expression ';'         { $$ = $1 }
+| return ';'             { $$ = $1 }
+| function
+| ';'                    { $$ = new nodes.BlockNode([]); }
 ;
 
 // Expressions, as opposed to statements, return a value and can be nested inside
@@ -54,7 +47,6 @@ expression:
 | variable
 | call
 | operator
-| function
 | '(' expression ')'           { $$ = $2; }
 ;
 
@@ -95,16 +87,7 @@ operator:
 ;
 
 function:
-  FUNCTION IDENTIFIER "(" parameters ")" "{" statements "}"
-                               { $$ = new nodes.FunctionNode("public", $2, $4, $7) }
-| functionAccessIndicator FUNCTION IDENTIFIER "(" parameters ")" "{" statements "}"
-                               { $$ = new nodes.FunctionNode($1, $3, $5, $8) }
-;
-
-functionAccessIndicator:
-  PUBLIC_ACCESS                { $$ = $1 }
-| PROTECTED_ACCESS             { $$ = $1 }
-| PRIVATE_ACCESS               { $$ = $1 }
+  FUNCTION IDENTIFIER "(" parameters ")" "{" statements "}"  { $$ = new nodes.FunctionNode("public", $2, $4, $7) }
 ;
 
 parameters:
