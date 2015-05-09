@@ -150,7 +150,7 @@ case 29:
  this.$ = new nodes.ConcatNode($$[$0-2], $$[$0]) 
 break;
 case 30:
- this.$ = new nodes.FunctionNode("public", $$[$0-6], $$[$0-4], $$[$0-1]) 
+ this.$ = new nodes.FunctionNode($$[$0-6], $$[$0-4], $$[$0-1]) 
 break;
 case 32:
  $$[$0-3].push($$[$0]); this.$ = $$[$0-3] 

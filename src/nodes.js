@@ -33,8 +33,7 @@ exports.CallNode = function CallNode(name, argumentNodes) {
     this.argumentNodes = argumentNodes;
 };
 
-exports.FunctionNode = function FunctionNode(access, name, parameters, bodyNode) {
-    this.access = access;
+exports.FunctionNode = function FunctionNode(name, parameters, bodyNode) {
     this.name = name;
     this.parameters = parameters;
     this.bodyNode = bodyNode;

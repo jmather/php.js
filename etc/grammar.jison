@@ -87,7 +87,7 @@ operator:
 ;
 
 function:
-  FUNCTION IDENTIFIER "(" parameters ")" "{" statements "}"  { $$ = new nodes.FunctionNode("public", $2, $4, $7) }
+  FUNCTION IDENTIFIER "(" parameters ")" "{" statements "}"  { $$ = new nodes.FunctionNode($2, $4, $7) }
 ;
 
 parameters:
