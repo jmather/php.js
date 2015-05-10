@@ -47,5 +47,12 @@ describe('Interpreter', function () {
             var nodes = parser.parse('<?php return 4 / 2;');
             assert.equal(nodes.eval(runtime.rootScope).value, 2);
         });
+
     });
+
+    it('works', function() {
+        var nodes = parser.parse('<?php $a = 1; if (1 == 1) { $a = 2; }');
+        nodes.eval(runtime.rootScope);
+        assert.equal(runtime.rootScope.get('a').value, 2);
+    })
 });

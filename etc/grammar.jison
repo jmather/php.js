@@ -37,7 +37,12 @@ statement:
   expression ';'         { $$ = $1 }
 | return ';'             { $$ = $1 }
 | function
+| if_statement
 | ';'                    { $$ = new nodes.BlockNode([]); }
+;
+
+if_statement:
+  IF "(" expression ")" "{" statements "}" { $$ = new nodes.IfNode($3, $6); }
 ;
 
 // Expressions, as opposed to statements, return a value and can be nested inside
@@ -84,6 +89,7 @@ operator:
 | expression '-' expression    { $$ = new nodes.SubtractNode($1, $3) }
 | expression '/' expression    { $$ = new nodes.DivideNode($1, $3) }
 | expression '.' expression    { $$ = new nodes.ConcatNode($1, $3) }
+| expression '==' expression    { $$ = new nodes.EqualsNode($1, $3) }
 ;
 
 function:

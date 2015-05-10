@@ -54,4 +54,20 @@ describe('Parser', function() {
       parser.parse("<?php function thing($a, $b) { return 'hello'; }"));
   });
 
+  it('parses if', function() {
+    assert.deepEqual(
+        new nodes.BlockNode([
+            new nodes.IfNode(
+                new nodes.EqualsNode(
+                    new nodes.NumberNode(1),
+                    new nodes.NumberNode(1)
+                ),
+                new nodes.BlockNode([
+                    new nodes.CallNode('print', [new nodes.NumberNode(1)])
+                ])
+            )
+        ]),
+        parser.parse("<?php if (1 == 1) { print(1); }")
+    );
+  });
 });

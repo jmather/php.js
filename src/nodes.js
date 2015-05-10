@@ -1,7 +1,7 @@
 // Define all the nodes produced by the parser.
 
 exports.BlockNode = function BlockNode(nodes) {
-    this.nodes = nodes;
+    this.nodes = nodes || [];
 };
 
 exports.BlockNode.prototype.push = function (node) {
@@ -66,4 +66,14 @@ exports.DivideNode = function DivideNode(node1, node2) {
 exports.ConcatNode = function ConcatNode(node1, node2) {
     this.node1 = node1;
     this.node2 = node2;
+};
+
+exports.IfNode = function IfNode(expresion, body) {
+    this.expresion = expresion;
+    this.body = body;
+};
+
+exports.EqualsNode = function EqualsNode(argument1, argument2) {
+    this.arg1 = argument1;
+    this.arg2 = argument2;
 };
