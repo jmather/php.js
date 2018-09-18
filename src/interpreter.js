@@ -115,7 +115,7 @@ nodes.ConcatNode.prototype.eval = function (scope) {
 
 nodes.IfNode.prototype.eval = function(scope) {
     var exp = this.expresion.eval(scope);
-    if (exp == runtime.true) {
+    if (exp === runtime.true) {
         return this.body.eval(scope);
     }
 };
@@ -124,7 +124,7 @@ nodes.IfNode.prototype.eval = function(scope) {
 nodes.EqualsNode.prototype.eval = function (scope) {
     var value1 = this.arg1.eval(scope);
     var value2 = this.arg2.eval(scope);
-    if (value1.value == value2.value) {
+    if (value1.value === value2.value) {
         return runtime.true;
     } else {
         return runtime.false;
