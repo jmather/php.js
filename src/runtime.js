@@ -94,7 +94,7 @@ exports.null = new exports.PHPValue(null);
 exports.rootScope = new exports.PHPScope();
 exports.functionScope = new exports.PHPScope();
 
-// Here we'd normaly define all the fancy things, like global functions and objects, that you
+// Here we'd normally define all the fancy things, like global functions and objects, that you
 // have access to inside your PHP programs. We will start with a meager `print`.
 
 exports.functionScope.set('print', new exports.PHPFunction('print', ['content'], {'eval': function(scope) {
