@@ -53,7 +53,7 @@ nodes.NullNode.prototype.eval = function (scope) {
     return runtime.null;
 };
 
-// Creating various objects is done by instantiating `JsObject`.
+// Creating various objects is done by instantiating `PHPValue`.
 
 nodes.StringNode.prototype.eval = function (scope) {
     return new runtime.PHPValue(this.value);

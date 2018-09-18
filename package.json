@@ -19,7 +19,7 @@
     "url": "https://github.com/jmather/phpjs/issues"
   },
   "dependencies": {
-    "jison": "0.4.x",
-    "mocha": "1.x"
+    "jison": "^0.4.18",
+    "mocha": "^5.2.0"
   }
 }
